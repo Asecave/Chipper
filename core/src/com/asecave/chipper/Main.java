@@ -15,6 +15,7 @@ public class Main extends ApplicationAdapter {
 
 	private ShapeRenderer sr;
 	public static OrthographicCamera cam;
+	private OrthographicCamera hudCam;
 	private InputAdapter input = new InputAdapter() {
 		public boolean scrolled(float amountX, float amountY) {
 			Main.this.scrolled((int) amountY);
@@ -23,6 +24,7 @@ public class Main extends ApplicationAdapter {
 	};
 
 	private Grid grid;
+	private Hud hud;
 
 	@Override
 	public void create() {
@@ -30,8 +32,10 @@ public class Main extends ApplicationAdapter {
 		sr.setAutoShapeType(true);
 
 		cam = new OrthographicCamera();
+		hudCam = new OrthographicCamera();
 
 		grid = new Grid(100, 100);
+		hud = new Hud();
 
 		Gdx.input.setInputProcessor(input);
 	}
@@ -46,10 +50,13 @@ public class Main extends ApplicationAdapter {
 		}
 
 		cam.update();
+		hudCam.update();
 
 		sr.setProjectionMatrix(cam.combined);
 		sr.begin();
 		grid.render(sr);
+		sr.setProjectionMatrix(hudCam.combined);
+		hud.render(sr);
 		sr.end();
 
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
@@ -66,22 +73,23 @@ public class Main extends ApplicationAdapter {
 	public void resize(int width, int height) {
 		cam.viewportWidth = width;
 		cam.viewportHeight = height;
+		hudCam.viewportWidth = width;
+		hudCam.viewportHeight = height;
+		hudCam.position.x = Gdx.graphics.getWidth() / 2;
+		hudCam.position.y = Gdx.graphics.getHeight() / 2;
 	}
 
 	private void scrolled(int dir) {
-		Vector2 prev = getRelativeCursor();
-		cam.zoom += dir / 20f;
-		Vector2 after = getRelativeCursor();
-		cam.position.add(new Vector3(after.sub(prev), 0));
-		
+		Vector3 prev = getRelativeCursor();
+		if (cam.zoom + dir / 20f >= 0.05f && cam.zoom + dir / 20f <= 1f) {
+			cam.zoom += dir / 20f;
+		}
+		Vector3 after = getRelativeCursor();
+		cam.position.add(after.sub(prev));
+
 	}
-	
-	public static Vector2 getRelativeCursor() {
-		float x = cam.position.x;
-		float y = cam.position.y;
-		float mx = (Gdx.input.getX() - Gdx.graphics.getWidth() / 2f) * cam.zoom;
-		float my = ((Gdx.graphics.getHeight() - Gdx.input.getY()) - Gdx.graphics.getHeight() / 2f) * cam.zoom;
-		
-		return new Vector2(x + mx, y + my);
+
+	public static Vector3 getRelativeCursor() {
+		return cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 	}
 }
