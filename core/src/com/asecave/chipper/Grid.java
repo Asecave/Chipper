@@ -1,15 +1,15 @@
 package com.asecave.chipper;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
 
 public class Grid {
 
 	Tile[][] tiles;
 
-	private int scale = 10;
+	public static int scale = 9;
 
 	public Grid(int width, int height) {
 
@@ -25,10 +25,10 @@ public class Grid {
 				sr.setColor(Color.DARK_GRAY);
 				sr.rect(x * scale, y * scale, scale, 1);
 				sr.rect(x * scale, y * scale, 1, scale);
-				int mx = (int) ((Gdx.input.getX() / Main.cam.viewportWidth * Gdx.graphics.getWidth()) + Main.cam.position.x - Gdx.graphics.getWidth() / 2);
-				int my = (int) (Gdx.graphics.getHeight() - Gdx.input.getY() + Main.cam.position.y - Gdx.graphics.getHeight() / 2);
-				if (mx >= x * scale && mx < x * scale + scale && my >= y * scale
-						&& my < y * scale + scale) {
+				Vector2 rel = Main.getRelativeCursor();
+				float mx = (x + rel.x) / scale;
+				float my = (y + rel.y) / scale;
+				if (mx >= x && mx < x + 1 && my >= y && my < y + 1) {
 					sr.setColor(Color.GRAY);
 					sr.rect(x * scale + 1, y * scale + 1, scale - 1, scale - 1);
 				}

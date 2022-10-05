@@ -7,6 +7,8 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Main extends ApplicationAdapter {
@@ -39,8 +41,8 @@ public class Main extends ApplicationAdapter {
 		ScreenUtils.clear(0.2f, 0.2f, 0.2f, 1f);
 
 		if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
-			cam.position.x -= Gdx.input.getDeltaX() * (cam.viewportWidth / Gdx.graphics.getWidth());
-			cam.position.y += Gdx.input.getDeltaY() * (cam.viewportHeight / Gdx.graphics.getHeight());
+			cam.position.x -= Gdx.input.getDeltaX() * cam.zoom;
+			cam.position.y += Gdx.input.getDeltaY() * cam.zoom;
 		}
 
 		cam.update();
@@ -67,10 +69,19 @@ public class Main extends ApplicationAdapter {
 	}
 
 	private void scrolled(int dir) {
-		float ar = cam.viewportWidth / cam.viewportHeight;
-		if (cam.viewportWidth + dir * 100 > 10 && cam.viewportWidth + dir * 100 <= Gdx.graphics.getWidth()) {
-			cam.viewportWidth += dir * 100;
-			cam.viewportHeight += (dir * 100) / ar;
-		}
+		Vector2 prev = getRelativeCursor();
+		cam.zoom += dir / 20f;
+		Vector2 after = getRelativeCursor();
+		cam.position.add(new Vector3(after.sub(prev), 0));
+		
+	}
+	
+	public static Vector2 getRelativeCursor() {
+		float x = cam.position.x;
+		float y = cam.position.y;
+		float mx = (Gdx.input.getX() - Gdx.graphics.getWidth() / 2f) * cam.zoom;
+		float my = ((Gdx.graphics.getHeight() - Gdx.input.getY()) - Gdx.graphics.getHeight() / 2f) * cam.zoom;
+		
+		return new Vector2(x + mx, y + my);
 	}
 }
