@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Main extends ApplicationAdapter {
+	
+	public static Main INSTANCE;
 
 	private ShapeRenderer sr;
 	public static OrthographicCamera cam;
@@ -28,13 +31,14 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+		INSTANCE = this;
 		sr = new ShapeRenderer();
 		sr.setAutoShapeType(true);
 
 		cam = new OrthographicCamera();
 		hudCam = new OrthographicCamera();
 
-		grid = new Grid(100, 100);
+		grid = new Grid(200, 200);
 		hud = new Hud();
 
 		Gdx.input.setInputProcessor(input);
@@ -44,7 +48,7 @@ public class Main extends ApplicationAdapter {
 	public void render() {
 		ScreenUtils.clear(0.2f, 0.2f, 0.2f, 1f);
 
-		if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
+		if (Gdx.input.isButtonPressed(Buttons.MIDDLE)) {
 			cam.position.x -= Gdx.input.getDeltaX() * cam.zoom;
 			cam.position.y += Gdx.input.getDeltaY() * cam.zoom;
 		}
@@ -52,6 +56,8 @@ public class Main extends ApplicationAdapter {
 		cam.update();
 		hudCam.update();
 
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		sr.setProjectionMatrix(cam.combined);
 		sr.begin();
 		grid.render(sr);
@@ -80,16 +86,21 @@ public class Main extends ApplicationAdapter {
 	}
 
 	private void scrolled(int dir) {
-		Vector3 prev = getRelativeCursor();
+		Vector2 prev = getRelativeCursor();
 		if (cam.zoom + dir / 20f >= 0.05f && cam.zoom + dir / 20f <= 1f) {
 			cam.zoom += dir / 20f;
 		}
-		Vector3 after = getRelativeCursor();
-		cam.position.add(after.sub(prev));
+		Vector2 after = getRelativeCursor();
+		cam.position.add(new Vector3(after.sub(prev), 0));
 
 	}
 
-	public static Vector3 getRelativeCursor() {
-		return cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+	public static Vector2 getRelativeCursor() {
+		Vector3 v = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+		return new Vector2(v.x, v.y);
+	}
+	
+	public Grid getGrid() {
+		return grid;
 	}
 }
