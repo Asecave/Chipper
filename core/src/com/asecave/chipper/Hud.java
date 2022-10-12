@@ -15,7 +15,7 @@ public class Hud {
 
 		int sw = Gdx.graphics.getWidth();
 		int sh = Gdx.graphics.getHeight();
-		int w = 200;
+		int w = 250;
 		int h = 50;
 
 		sr.translate(sw / 2 - w / 2, 50, 0);
@@ -47,8 +47,13 @@ public class Hud {
 		sr.setColor(Color.LIGHT_GRAY);
 		sr.rectLine(2 * h + h / 2 - 8, h / 2 - 4, 2 * h + h / 2 + 1, h / 2 + 5, 4);
 		sr.rectLine(2 * h + h / 2 + 8, h / 2 - 4, 2 * h + h / 2 - 1, h / 2 + 5, 4);
+		
 		sr.rectLine(3 * h + h / 2 - 8, h / 2 + 4, 3 * h + h / 2 + 1, h / 2 - 5, 4);
 		sr.rectLine(3 * h + h / 2 + 8, h / 2 + 4, 3 * h + h / 2 - 1, h / 2 - 5, 4);
+		
+		sr.rectLine(4 * h + h / 2 - 12, h / 2, 4 * h + h / 2 - 4, h / 2, 3);
+		sr.rectLine(4 * h + h / 2 - 5, h / 2 - 1, 4 * h + h / 2 + 4, h / 2 + 8, 3);
+		sr.rectLine(4 * h + h / 2 + 4, h / 2, 4 * h + h / 2 + 12, h / 2, 3);
 
 		sr.translate(-(sw / 2 - w / 2), -50, 0);
 

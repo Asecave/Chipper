@@ -2,7 +2,7 @@ package com.asecave.chipper;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class OrGate extends Gate {
+public class OrGate extends Block {
 
 	public OrGate(Grid grid) {
 		super(grid, Tile.OR);

@@ -1,10 +1,10 @@
 package com.asecave.chipper;
 
-public abstract class Gate extends Tile {
+public abstract class Block extends Tile {
 
 	public int connectedWireType = -1;
 	
-	public Gate(Grid grid, int type) {
+	public Block(Grid grid, int type) {
 		super(grid, type);
 	}
 

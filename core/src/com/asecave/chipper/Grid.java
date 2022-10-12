@@ -20,6 +20,8 @@ public class Grid {
 	private boolean flippedPlacement = false;
 	private boolean flippedDetermined = false;
 	public boolean canPlace = true;
+	
+	private Compiler compiler;
 
 	public int placingTile = Tile.WIRE;
 
@@ -27,6 +29,7 @@ public class Grid {
 
 		tiles = new Tile[width][height];
 
+		compiler = new Compiler();
 	}
 
 	public void render(ShapeRenderer sr) {
@@ -59,7 +62,7 @@ public class Grid {
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 				if (tiles[x][y] != null && Main.cam.frustum.boundsInFrustum(x * scale, y * scale, 0, scale, scale, 0)) {
-					tiles[x][y].render(sr, x, y, scale);
+					tiles[x][y].render(sr, x * scale, y * scale, scale);
 				}
 			}
 		}
@@ -71,7 +74,9 @@ public class Grid {
 			if (Gdx.input.isButtonJustPressed(Buttons.LEFT)) {
 				Vector2 coords = getCursorGridCoords();
 				if (coordsInBounds(coords)) {
-					tiles[(int) coords.x][(int) coords.y] = getPlacingTile();
+					if (tiles[(int) coords.x][(int) coords.y] == null) {
+						tiles[(int) coords.x][(int) coords.y] = getPlacingTile();
+					}
 				}
 			}
 		}
@@ -294,6 +299,8 @@ public class Grid {
 			return new AndGate(this);
 		case Tile.OR:
 			return new OrGate(this);
+		case Tile.SWITCH:
+			return new Switch(this);
 		}
 		return null;
 	}
@@ -323,14 +330,14 @@ public class Grid {
 	private void connectWire(int t1x, int t1y, int t2x, int t2y) {
 		Tile t1 = tiles[t1x][t1y];
 		Tile t2 = tiles[t2x][t2y];
-		if (t1 instanceof Gate || t2 instanceof Gate) {
-			Gate gate;
+		if (t1 instanceof Block || t2 instanceof Block) {
+			Block gate;
 			CableTile wire;
-			if (t1 instanceof Gate) {
-				gate = (Gate) t1;
+			if (t1 instanceof Block) {
+				gate = (Block) t1;
 				wire = (CableTile) t2;
 			} else {
-				gate = (Gate) t2;
+				gate = (Block) t2;
 				wire = (CableTile) t1;
 			}
 			if (gate.connectedWireType == -1 || gate.connectedWireType == wire.type) {
@@ -393,6 +400,7 @@ public class Grid {
 
 	public void compile() {
 
+		compiler.compile(tiles);
 	}
 
 	public Tile getMouseTile() {
