@@ -20,7 +20,7 @@ public class Grid {
 	private boolean flippedPlacement = false;
 	private boolean flippedDetermined = false;
 	public boolean canPlace = true;
-	
+
 	private Compiler compiler;
 
 	public int placingTile = Tile.WIRE;
@@ -331,42 +331,58 @@ public class Grid {
 		Tile t1 = tiles[t1x][t1y];
 		Tile t2 = tiles[t2x][t2y];
 		if (t1 instanceof Block || t2 instanceof Block) {
-			Block gate;
-			CableTile wire;
+			Block block;
+			CableTile cable;
 			if (t1 instanceof Block) {
-				gate = (Block) t1;
-				wire = (CableTile) t2;
+				block = (Block) t1;
+				cable = (CableTile) t2;
 			} else {
-				gate = (Block) t2;
-				wire = (CableTile) t1;
+				block = (Block) t2;
+				cable = (CableTile) t1;
 			}
-			if (gate.connectedWireType == -1 || gate.connectedWireType == wire.type) {
-				gate.connectedWireType = wire.type;
-				if (t1 == gate) {
+			if (block.connectedWireType == -1 || block.connectedWireType == cable.type) {
+				block.connectedWireType = cable.type;
+				if (t1 == block) {
 					if (t2x - t1x == 1) {
-						((CableTile) t2).connectWest();
+						cable.connectWest();
+						if (block.cableTile != null)
+							block.cableTile.connectEast();
 					}
 					if (t2x - t1x == -1) {
-						((CableTile) t2).connectEast();
+						cable.connectEast();
+						if (block.cableTile != null)
+							block.cableTile.connectWest();
 					}
 					if (t2y - t1y == 1) {
-						((CableTile) t2).connectSouth();
+						cable.connectSouth();
+						if (block.cableTile != null)
+							block.cableTile.connectNorth();
 					}
 					if (t2y - t1y == -1) {
-						((CableTile) t2).connectNorth();
+						cable.connectNorth();
+						if (block.cableTile != null)
+							block.cableTile.connectSouth();
 					}
 				} else {
 					if (t2x - t1x == 1) {
-						((CableTile) t1).connectEast();
+						cable.connectEast();
+						if (block.cableTile != null)
+							block.cableTile.connectWest();
 					}
 					if (t2x - t1x == -1) {
-						((CableTile) t1).connectWest();
+						cable.connectWest();
+						if (block.cableTile != null)
+							block.cableTile.connectEast();
 					}
 					if (t2y - t1y == 1) {
-						((CableTile) t1).connectNorth();
+						cable.connectNorth();
+						if (block.cableTile != null)
+							block.cableTile.connectSouth();
 					}
 					if (t2y - t1y == -1) {
-						((CableTile) t1).connectSouth();
+						cable.connectSouth();
+						if (block.cableTile != null)
+							block.cableTile.connectNorth();
 					}
 				}
 			}

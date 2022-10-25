@@ -38,7 +38,7 @@ public class Main extends ApplicationAdapter {
 		cam = new OrthographicCamera();
 		hudCam = new OrthographicCamera();
 
-		grid = new Grid(200, 200);
+		grid = new Grid(10, 10);
 		hud = new Hud();
 
 		Gdx.input.setInputProcessor(input);

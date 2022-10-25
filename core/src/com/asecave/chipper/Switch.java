@@ -10,10 +10,16 @@ public class Switch extends Block {
 
 	public Switch(Grid grid) {
 		super(grid, Tile.SWITCH);
+		cableTile = new WireTile(grid);
+		connectedWireType = Tile.WIRE;
+		
 	}
 
 	@Override
 	public void render(ShapeRenderer sr, int x, int y, int scale) {
+		
+		super.render(sr, x, y, scale);
+		
 		sr.setColor(Color.GRAY);
 		sr.set(ShapeType.Filled);
 		sr.rect(x + 4, y + 3, scale - 7, scale - 5);
