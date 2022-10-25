@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public abstract class Block extends Tile {
 
-	public int connectedWireType = -1;
 	public CableTile cableTile;
 
 	public Block(Grid grid, int type) {
