@@ -108,39 +108,35 @@ public class Grid {
 					for (int x = minX; x <= maxX; x++) {
 						for (int y = minY; y <= maxY; y++) {
 							tiles[x][y] = null;
-							if (coordsInBounds(x + 1, y) && tiles[x + 1][y] instanceof CableTile) {
-								((CableTile) tiles[x + 1][y]).disconnectWest();
-								((CableTile) tiles[x + 1][y]).setBridge(false);
-							}
-							if (coordsInBounds(x - 1, y) && tiles[x - 1][y] instanceof CableTile) {
-								((CableTile) tiles[x - 1][y]).disconnectEast();
-								((CableTile) tiles[x - 1][y]).setBridge(false);
-							}
-							if (coordsInBounds(x, y + 1) && tiles[x][y + 1] instanceof CableTile) {
-								((CableTile) tiles[x][y + 1]).disconnectSouth();
-								((CableTile) tiles[x][y + 1]).setBridge(false);
-							}
-							if (coordsInBounds(x, y - 1) && tiles[x][y - 1] instanceof CableTile) {
-								((CableTile) tiles[x][y - 1]).disconnectNorth();
-								((CableTile) tiles[x][y - 1]).setBridge(false);
-							}
-							if (coordsInBounds(x + 1, y) && tiles[x + 1][y] instanceof Block) {
-								if (((Block) tiles[x + 1][y]).cableTile != null) {
+							if (coordsInBounds(x + 1, y)) {
+								if (tiles[x + 1][y] instanceof CableTile) {
+									((CableTile) tiles[x + 1][y]).disconnectWest();
+									((CableTile) tiles[x + 1][y]).setBridge(false);
+								} else if (tiles[x + 1][y] instanceof Block) {
 									((Block) tiles[x + 1][y]).cableTile.disconnectWest();
 								}
 							}
-							if (coordsInBounds(x - 1, y) && tiles[x - 1][y] instanceof Block) {
-								if (((Block) tiles[x - 1][y]).cableTile != null) {
+							if (coordsInBounds(x - 1, y)) {
+								if (tiles[x - 1][y] instanceof CableTile) {
+									((CableTile) tiles[x - 1][y]).disconnectEast();
+									((CableTile) tiles[x - 1][y]).setBridge(false);
+								} else if (tiles[x - 1][y] instanceof Block) {
 									((Block) tiles[x - 1][y]).cableTile.disconnectEast();
 								}
 							}
-							if (coordsInBounds(x, y + 1) && tiles[x][y + 1] instanceof Block) {
-								if (((Block) tiles[x][y + 1]).cableTile != null) {
+							if (coordsInBounds(x, y + 1)) {
+								if (tiles[x][y + 1] instanceof CableTile) {
+									((CableTile) tiles[x][y + 1]).disconnectSouth();
+									((CableTile) tiles[x][y + 1]).setBridge(false);
+								} else if (tiles[x][y + 1] instanceof Block) {
 									((Block) tiles[x][y + 1]).cableTile.disconnectSouth();
 								}
 							}
-							if (coordsInBounds(x, y - 1) && tiles[x][y - 1] instanceof Block) {
-								if (((Block) tiles[x][y - 1]).cableTile != null) {
+							if (coordsInBounds(x, y - 1)) {
+								if (tiles[x][y - 1] instanceof CableTile) {
+									((CableTile) tiles[x][y - 1]).disconnectNorth();
+									((CableTile) tiles[x][y - 1]).setBridge(false);
+								} else if (tiles[x][y - 1] instanceof Block) {
 									((Block) tiles[x][y - 1]).cableTile.disconnectNorth();
 								}
 							}
