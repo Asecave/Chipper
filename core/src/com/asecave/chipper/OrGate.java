@@ -12,6 +12,9 @@ public class OrGate extends Block {
 
 	@Override
 	public void render(ShapeRenderer sr, int x, int y, int scale) {
+		
+		super.render(sr, x, y, scale);
+		
 		sr.setColor(Color.GRAY);
 		sr.set(ShapeType.Filled);
 		sr.rect(x + 1, y + 1, scale - 1, scale - 1);

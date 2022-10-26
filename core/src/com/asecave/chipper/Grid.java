@@ -113,7 +113,9 @@ public class Grid {
 									((CableTile) tiles[x + 1][y]).disconnectWest();
 									((CableTile) tiles[x + 1][y]).setBridge(false);
 								} else if (tiles[x + 1][y] instanceof Block) {
-									((Block) tiles[x + 1][y]).cableTile.disconnectWest();
+									Block b = (Block) tiles[x + 1][y];
+									if (b.cableTile != null)
+										b.cableTile.disconnectWest();
 								}
 							}
 							if (coordsInBounds(x - 1, y)) {
@@ -121,7 +123,9 @@ public class Grid {
 									((CableTile) tiles[x - 1][y]).disconnectEast();
 									((CableTile) tiles[x - 1][y]).setBridge(false);
 								} else if (tiles[x - 1][y] instanceof Block) {
-									((Block) tiles[x - 1][y]).cableTile.disconnectEast();
+									Block b = (Block) tiles[x - 1][y];
+									if (b.cableTile != null)
+										b.cableTile.disconnectEast();
 								}
 							}
 							if (coordsInBounds(x, y + 1)) {
@@ -129,7 +133,9 @@ public class Grid {
 									((CableTile) tiles[x][y + 1]).disconnectSouth();
 									((CableTile) tiles[x][y + 1]).setBridge(false);
 								} else if (tiles[x][y + 1] instanceof Block) {
-									((Block) tiles[x][y + 1]).cableTile.disconnectSouth();
+									Block b = (Block) tiles[x][y + 1];
+									if (b.cableTile != null)
+										b.cableTile.disconnectSouth();
 								}
 							}
 							if (coordsInBounds(x, y - 1)) {
@@ -137,7 +143,9 @@ public class Grid {
 									((CableTile) tiles[x][y - 1]).disconnectNorth();
 									((CableTile) tiles[x][y - 1]).setBridge(false);
 								} else if (tiles[x][y - 1] instanceof Block) {
-									((Block) tiles[x][y - 1]).cableTile.disconnectNorth();
+									Block b = (Block) tiles[x][y - 1];
+									if (b.cableTile != null)
+										b.cableTile.disconnectNorth();
 								}
 							}
 						}
@@ -209,7 +217,7 @@ public class Grid {
 										if (tiles[px][py] == null) {
 											tiles[px][py] = getPlacingTile();
 										}
-										connectWire(prevPlacedX, prevPlacedY, px, py);
+										connectWire(prevPlacedX, prevPlacedY, px, py, getPlacingTile().getClass());
 										prevPlacedX = px;
 										prevPlacedY = py;
 									}
@@ -220,7 +228,7 @@ public class Grid {
 										if (tiles[px][py] == null) {
 											tiles[px][py] = getPlacingTile();
 										}
-										connectWire(prevPlacedX, prevPlacedY, px, py);
+										connectWire(prevPlacedX, prevPlacedY, px, py, getPlacingTile().getClass());
 										prevPlacedX = px;
 										prevPlacedY = py;
 									}
@@ -232,7 +240,7 @@ public class Grid {
 										if (tiles[px][py] == null) {
 											tiles[px][py] = getPlacingTile();
 										}
-										connectWire(prevPlacedX, prevPlacedY, px, py);
+										connectWire(prevPlacedX, prevPlacedY, px, py, getPlacingTile().getClass());
 										prevPlacedX = px;
 										prevPlacedY = py;
 									}
@@ -243,7 +251,7 @@ public class Grid {
 										if (tiles[px][py] == null) {
 											tiles[px][py] = getPlacingTile();
 										}
-										connectWire(prevPlacedX, prevPlacedY, px, py);
+										connectWire(prevPlacedX, prevPlacedY, px, py, getPlacingTile().getClass());
 										prevPlacedX = px;
 										prevPlacedY = py;
 									}
@@ -256,7 +264,7 @@ public class Grid {
 										if (tiles[px][py] == null) {
 											tiles[px][py] = getPlacingTile();
 										}
-										connectWire(prevPlacedX, prevPlacedY, px, py);
+										connectWire(prevPlacedX, prevPlacedY, px, py, getPlacingTile().getClass());
 										prevPlacedX = px;
 										prevPlacedY = py;
 									}
@@ -267,7 +275,7 @@ public class Grid {
 										if (tiles[px][py] == null) {
 											tiles[px][py] = getPlacingTile();
 										}
-										connectWire(prevPlacedX, prevPlacedY, px, py);
+										connectWire(prevPlacedX, prevPlacedY, px, py, getPlacingTile().getClass());
 										prevPlacedX = px;
 										prevPlacedY = py;
 									}
@@ -279,7 +287,7 @@ public class Grid {
 										if (tiles[px][py] == null) {
 											tiles[px][py] = getPlacingTile();
 										}
-										connectWire(prevPlacedX, prevPlacedY, px, py);
+										connectWire(prevPlacedX, prevPlacedY, px, py, getPlacingTile().getClass());
 										prevPlacedX = px;
 										prevPlacedY = py;
 									}
@@ -290,7 +298,7 @@ public class Grid {
 										if (tiles[px][py] == null) {
 											tiles[px][py] = getPlacingTile();
 										}
-										connectWire(prevPlacedX, prevPlacedY, px, py);
+										connectWire(prevPlacedX, prevPlacedY, px, py, getPlacingTile().getClass());
 										prevPlacedX = px;
 										prevPlacedY = py;
 									}
@@ -343,7 +351,7 @@ public class Grid {
 		sr.rect(0, tiles[0].length * scale, tiles.length * scale, 1);
 	}
 
-	private void connectWire(int t1x, int t1y, int t2x, int t2y) {
+	private void connectWire(int t1x, int t1y, int t2x, int t2y, Class<?> type) {
 		Tile t1 = tiles[t1x][t1y];
 		Tile t2 = tiles[t2x][t2y];
 
@@ -363,26 +371,44 @@ public class Grid {
 				c2 = ((Block) t2).cableTile;
 			}
 		}
+		if (t1 instanceof Block && t2 instanceof CableTile && c1 == null) {
+			((Block) t1).cableTile = (CableTile) getPlacingTile();
+			c1 = ((Block) t1).cableTile;
+		}
+		if (t2 instanceof Block && t1 instanceof CableTile && c2 == null) {
+			((Block) t2).cableTile = (CableTile) getPlacingTile();
+			c2 = ((Block) t2).cableTile;
+		}
+		if (t1 instanceof Block && t2 instanceof Block) {
+			if (c1 == null) {
+				((Block) t1).cableTile = (CableTile) getPlacingTile();
+				c1 = ((Block) t1).cableTile;
+			}
+			if (c2 == null) {
+				((Block) t2).cableTile = (CableTile) getPlacingTile();
+				c2 = ((Block) t2).cableTile;
+			}
+		}
 		if (t2x - t1x == 1) {
-			if (c1 != null && c2 != null && c1.getClass() == c2.getClass()) {
+			if (c1 != null && c2 != null && c1.getClass() == c2.getClass() && c1.getClass() == type) {
 				c1.connectEast();
 				c2.connectWest();
 			}
 		}
 		if (t2x - t1x == -1) {
-			if (c1 != null && c2 != null && c1.getClass() == c2.getClass()) {
+			if (c1 != null && c2 != null && c1.getClass() == c2.getClass() && c1.getClass() == type) {
 				c1.connectWest();
 				c2.connectEast();
 			}
 		}
 		if (t2y - t1y == 1) {
-			if (c1 != null && c2 != null && c1.getClass() == c2.getClass()) {
+			if (c1 != null && c2 != null && c1.getClass() == c2.getClass() && c1.getClass() == type) {
 				c1.connectNorth();
 				c2.connectSouth();
 			}
 		}
 		if (t2y - t1y == -1) {
-			if (c1 != null && c2 != null && c1.getClass() == c2.getClass()) {
+			if (c1 != null && c2 != null && c1.getClass() == c2.getClass() && c1.getClass() == type) {
 				c1.connectSouth();
 				c2.connectNorth();
 			}
