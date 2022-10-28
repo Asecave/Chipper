@@ -200,8 +200,8 @@ public class Grid {
 						if (tiles[(int) startPlace.x][(int) startPlace.y] instanceof CableTile) {
 							startTile = (CableTile) tiles[(int) startPlace.x][(int) startPlace.y];
 						}
-						if (end.equals(startPlace) && startTile != null && startTile.connectedNorth
-								&& startTile.connectedEast && startTile.connectedSouth && startTile.connectedWest) {
+						if (end.equals(startPlace) && startTile != null && startTile.isConnectedNorth()
+								&& startTile.isConnectedEast() && startTile.isConnectedSouth() && startTile.isConnectedWest()) {
 							startTile.toggleBridge();
 						} else {
 							if (tiles[(int) startPlace.x][(int) startPlace.y] == null) {
@@ -391,26 +391,26 @@ public class Grid {
 		}
 		if (t2x - t1x == 1) {
 			if (c1 != null && c2 != null && c1.getClass() == c2.getClass() && c1.getClass() == type) {
-				c1.connectEast();
-				c2.connectWest();
+				c1.connectEast(c2);
+				c2.connectWest(c1);
 			}
 		}
 		if (t2x - t1x == -1) {
 			if (c1 != null && c2 != null && c1.getClass() == c2.getClass() && c1.getClass() == type) {
-				c1.connectWest();
-				c2.connectEast();
+				c1.connectWest(c2);
+				c2.connectEast(c1);
 			}
 		}
 		if (t2y - t1y == 1) {
 			if (c1 != null && c2 != null && c1.getClass() == c2.getClass() && c1.getClass() == type) {
-				c1.connectNorth();
-				c2.connectSouth();
+				c1.connectNorth(c2);
+				c2.connectSouth(c1);
 			}
 		}
 		if (t2y - t1y == -1) {
 			if (c1 != null && c2 != null && c1.getClass() == c2.getClass() && c1.getClass() == type) {
-				c1.connectSouth();
-				c2.connectNorth();
+				c1.connectSouth(c2);
+				c2.connectNorth(c1);
 			}
 		}
 	}

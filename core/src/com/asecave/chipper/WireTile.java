@@ -13,16 +13,16 @@ public class WireTile extends CableTile {
 	public void render(ShapeRenderer sr, int x, int y, int scale) {
 		sr.setColor(Color.RED);
 		sr.rect(x + scale / 2 - 1, y + scale / 2 - 1, 3, 3);
-		if (connectedNorth) {
+		if (isConnectedNorth()) {
 			sr.rect(x + scale / 2 - 1, y + scale / 2 + 2, 3, scale / 2 - 2);
 		}
-		if (connectedSouth) {
+		if (isConnectedSouth()) {
 			sr.rect(x + scale / 2 - 1, y, 3, scale / 2 - 1);
 		}
-		if (connectedEast) {
+		if (isConnectedEast()) {
 			sr.rect(x + scale / 2 + 2, y + scale / 2 - 1, scale / 2 - 2, 3);
 		}
-		if (connectedWest) {
+		if (isConnectedWest()) {
 			sr.rect(x, y + scale / 2 - 1, scale / 2 - 1, 3);
 		}
 		if (bridge) {

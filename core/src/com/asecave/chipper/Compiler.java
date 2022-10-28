@@ -1,15 +1,16 @@
 package com.asecave.chipper;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.badlogic.gdx.utils.Array;
+
 public class Compiler {
 
-	private Tile root;
+	private Array<Tile> startTiles;
 
 	public void compile(Tile[][] tiles) {
 		
@@ -18,7 +19,7 @@ public class Compiler {
 		int debugScale = 20;
 		
 		JFrame frame = new JFrame("Compiler");
-		frame.setSize(tiles.length * debugScale + 40, tiles[0].length * debugScale + 40);
+		frame.setSize(tiles.length * debugScale + 16, tiles[0].length * debugScale + 39);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel panel = new JPanel();
 		frame.add(panel);
@@ -47,19 +48,20 @@ public class Compiler {
 		
 		
 		
+		startTiles = new Array<Tile>();
+		
 		// Finding entry
-		t: for (int x = 0; x < tiles.length; x++) {
+		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 				if (tiles[x][y] != null) {
 					if (tiles[x][y] instanceof Switch) {
-						root = tiles[x][y];
-						break t;
+						startTiles.add(tiles[x][y]);
 					}
 				}
 			}
 		}
 		
-		
+		System.out.println(startTiles.toString());
 	}
 
 }
