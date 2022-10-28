@@ -18,7 +18,7 @@ public abstract class Block extends Tile {
 		}
 	}
 	
-	public Tile[] getConnectedTiles() {
+	public Tile[] getConnectedCables() {
 		if (cableTile == null) {
 			return new Tile[0];
 		} else {

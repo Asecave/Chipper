@@ -6,11 +6,12 @@ import java.awt.Graphics2D;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.asecave.chipper.compiled.CompiledBlock;
 import com.badlogic.gdx.utils.Array;
 
 public class Compiler {
 
-	private Array<Tile> startTiles;
+	private Array<CompiledBlock> compiledStartTiles = new Array<CompiledBlock>();
 
 	public void compile(Tile[][] tiles) {
 		
@@ -48,20 +49,30 @@ public class Compiler {
 		
 		
 		
-		startTiles = new Array<Tile>();
+		Array<Block> startTiles = new Array<Block>();
 		
 		// Finding entry
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 				if (tiles[x][y] != null) {
 					if (tiles[x][y] instanceof Switch) {
-						startTiles.add(tiles[x][y]);
+						startTiles.add((Block) tiles[x][y]);
 					}
 				}
 			}
 		}
 		
-		System.out.println(startTiles.toString());
+		compiledStartTiles.clear();
+		for (Block t : startTiles) {
+			compiledStartTiles.add(build(t));
+		}
 	}
 
+	private CompiledBlock build(Block start) {
+		CompiledBlock b = new CompiledBlock(start);
+		for (Tile t : start.getConnectedCables()) {
+			
+		}
+		return b;
+	}
 }
