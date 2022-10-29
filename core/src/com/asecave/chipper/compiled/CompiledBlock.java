@@ -7,4 +7,12 @@ public class CompiledBlock {
 	public void connectOutputToCableGrid(CompiledCableGrid ccg) {
 		this.ccg = ccg;
 	}
+
+	public void induct(int power) {
+		
+	}
+	
+	public void updateRender() {
+		
+	}
 }

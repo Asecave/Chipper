@@ -35,8 +35,11 @@ public class Switch extends Block {
 		}
 	}
 
-	@Override
-	public void onActiveClick() {
+	public void toggle() {
 		state = !state;
+	}
+	
+	public boolean getState() {
+		return state;
 	}
 }

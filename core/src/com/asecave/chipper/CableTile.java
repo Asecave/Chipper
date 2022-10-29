@@ -10,6 +10,7 @@ public abstract class CableTile extends Tile {
 	private Block parent;
 
 	protected boolean bridge = false;
+	protected int power;
 
 	public CableTile(Grid grid, int type) {
 		super(grid, type);
@@ -93,5 +94,40 @@ public abstract class CableTile extends Tile {
 	
 	public Block getParent() {
 		return parent;
+	}
+	
+	public void setPower(int power) {
+		this.power = power;
+	}
+	
+	public CableTile[] getConnectedCables() {
+		int connectionCount = 0;
+		if (isConnectedNorth())
+			connectionCount++;
+		if (isConnectedSouth())
+			connectionCount++;
+		if (isConnectedEast())
+			connectionCount++;
+		if (isConnectedWest())
+			connectionCount++;
+		CableTile[] connected = new CableTile[connectionCount];
+		int i = 0;
+		if (isConnectedNorth()) {
+			connected[i] = getConnectedCableNorth();
+			i++;
+		}
+		if (isConnectedSouth()) {
+			connected[i] = getConnectedCableSouth();
+			i++;
+		}
+		if (isConnectedEast()) {
+			connected[i] = getConnectedCableEast();
+			i++;
+		}
+		if (isConnectedWest()) {
+			connected[i] = getConnectedCableWest();
+			i++;
+		}
+		return connected;
 	}
 }

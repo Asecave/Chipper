@@ -1,6 +1,7 @@
 package com.asecave.chipper.compiled;
 
 import com.asecave.chipper.Block;
+import com.asecave.chipper.Switch;
 
 public class CompiledEntryBlock {
 	
@@ -17,5 +18,20 @@ public class CompiledEntryBlock {
 
 	public Block getBlock() {
 		return block;
+	}
+	
+	public void update() {
+		int power = 0;
+		if (block instanceof Switch) {
+			Switch s = (Switch) block;
+			if (s.getState()) {
+				power = 1;
+			}
+		}
+		cable.induct(power);
+	}
+
+	public void updateRender() {
+		cable.updateRender();
 	}
 }

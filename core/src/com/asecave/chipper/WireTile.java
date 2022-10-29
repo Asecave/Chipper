@@ -11,7 +11,11 @@ public class WireTile extends CableTile {
 
 	@Override
 	public void render(ShapeRenderer sr, int x, int y, int scale) {
-		sr.setColor(Color.RED);
+		Color color = Color.RED.cpy();
+		if (power == 0) {
+			color.add(-0.5f, -0.5f, -0.5f, 0f);
+		}
+		sr.setColor(color);
 		sr.rect(x + scale / 2 - 1, y + scale / 2 - 1, 3, 3);
 		if (isConnectedNorth()) {
 			sr.rect(x + scale / 2 - 1, y + scale / 2 + 2, 3, scale / 2 - 2);

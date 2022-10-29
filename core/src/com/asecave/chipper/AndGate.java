@@ -40,5 +40,4 @@ public class AndGate extends Block {
 		sr.rect(x + 8, y + 9, 1, 1);
 		sr.rect(x + 9, y + 6, 1, 1);
 	}
-
 }

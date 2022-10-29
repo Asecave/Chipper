@@ -1,14 +1,15 @@
 package com.asecave.chipper;
 
+import com.asecave.chipper.compiled.CompiledCableGrid;
 import com.asecave.chipper.compiled.CompiledEntryBlock;
 import com.badlogic.gdx.utils.Array;
 
 public class Compiler {
 
 	public Array<CompiledEntryBlock> compile(Tile[][] tiles) {
-		
+
 		// ############ JFrame Debug Code ##############
-		
+
 //		int debugScale = 20;
 //		
 //		JFrame frame = new JFrame("Compiler");
@@ -36,13 +37,13 @@ public class Compiler {
 //				}
 //			}
 //		}
-		
+
 		// ################## End ######################
-		
+
 		Array<CompiledEntryBlock> compiledEntryBlocks = new Array<CompiledEntryBlock>();
-		
+
 		Array<Block> startTiles = new Array<Block>();
-		
+
 		// Finding entry
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
@@ -53,12 +54,11 @@ public class Compiler {
 				}
 			}
 		}
-		
+
 		compiledEntryBlocks.clear();
 		for (Block t : startTiles) {
 			compiledEntryBlocks.add(build(t));
 		}
-		
 
 //		CompiledCableGrid ccg = new CompiledCableGrid();
 //		CompiledBlock cb = new CompiledBlock();
@@ -68,17 +68,33 @@ public class Compiler {
 //		
 //		CompiledEntryBlock ceb = new CompiledEntryBlock();
 //		ceb.connectToCableGrid(ccg);
-		
+
 		return compiledEntryBlocks;
 	}
 
 	private CompiledEntryBlock build(Block start) {
-		compileTile(start);
+		CompiledCableGrid grid = new CompiledCableGrid();
+		compileTile(start, grid);
 		CompiledEntryBlock ceb = new CompiledEntryBlock(start);
+		ceb.connectToCableGrid(grid);
 		return ceb;
 	}
-	
-	private void compileTile(Tile t) {
-		
+
+	private void compileTile(Tile t, CompiledCableGrid currentGrid) {
+		if (t instanceof Block) {
+			Block block = (Block) t;
+			if (block instanceof Switch) {
+				compileTile(block.cableTile, currentGrid);
+			}
+		} else if (t instanceof CableTile) {
+			CableTile cable = (CableTile) t;
+			currentGrid.addTile(cable);
+			cable.setCompiled();
+			for (CableTile adj : cable.getConnectedCables()) {
+				if (!adj.isCompiled()) {
+					compileTile(adj, currentGrid);
+				}
+			}
+		}
 	}
 }

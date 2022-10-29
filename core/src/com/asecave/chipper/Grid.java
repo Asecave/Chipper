@@ -68,7 +68,11 @@ public class Grid {
 				if (t != null) {
 					for (CompiledEntryBlock ceb : entryBlocks) {
 						if (ceb.getBlock() == t) {
-							ceb.getBlock().onActiveClick();
+							if (ceb.getBlock() instanceof Switch) {
+								((Switch) ceb.getBlock()).toggle();
+							}
+							ceb.update();
+							ceb.updateRender();
 						}
 					}
 				}
