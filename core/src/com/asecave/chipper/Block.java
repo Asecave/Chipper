@@ -52,4 +52,7 @@ public abstract class Block extends Tile {
 			return connected;
 		}
 	}
+	
+	public void onActiveClick() {
+	}
 }

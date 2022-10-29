@@ -6,6 +6,8 @@ public abstract class CableTile extends Tile {
 	protected CableTile connectedCableSouth = null;
 	protected CableTile connectedCableEast = null;
 	protected CableTile connectedCableWest = null;
+	
+	private Block parent;
 
 	protected boolean bridge = false;
 
@@ -83,5 +85,13 @@ public abstract class CableTile extends Tile {
 
 	public boolean isConnectedWest() {
 		return connectedCableWest != null;
+	}
+	
+	public void setParent(Block parent) {
+		this.parent = parent;
+	}
+	
+	public Block getParent() {
+		return parent;
 	}
 }

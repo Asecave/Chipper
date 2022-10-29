@@ -1,5 +1,6 @@
 package com.asecave.chipper;
 
+import com.asecave.chipper.compiled.CompiledEntryBlock;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 public class Grid {
 
@@ -25,6 +27,9 @@ public class Grid {
 
 	public int placingTile = Tile.WIRE;
 
+	private boolean activeGrid = false;
+	private Array<CompiledEntryBlock> entryBlocks;
+
 	public Grid(int width, int height) {
 
 		tiles = new Tile[width][height];
@@ -34,22 +39,19 @@ public class Grid {
 
 	public void render(ShapeRenderer sr) {
 
-		if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-			placingTile = 0;
-		}
-		if (Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
-			placingTile = 1;
-		}
+		if (!activeGrid) {
+			drawGrid(sr);
 
-		drawGrid(sr);
+			if (getPlacingTile() instanceof CableTile) {
+				checkLinePlacement(sr);
+			} else {
+				checkBlockPlacement(sr);
+			}
 
-		if (getPlacingTile() instanceof CableTile) {
-			checkLinePlacement(sr);
+			checkDelete(sr);
 		} else {
-			checkBlockPlacement(sr);
+			checkActiveInteraction();
 		}
-
-		checkDelete(sr);
 
 		renderTiles(sr);
 
@@ -57,8 +59,25 @@ public class Grid {
 			flippedPlacement = !flippedPlacement;
 		}
 	}
+	
+	private void checkActiveInteraction() {
+		if (Gdx.input.isButtonJustPressed(Buttons.LEFT)) {
+			Vector2 coords = getCursorGridCoords();
+			if (coordsInBounds(coords)) {
+				Tile t = tiles[(int) coords.x][(int) coords.y];
+				if (t != null) {
+					for (CompiledEntryBlock ceb : entryBlocks) {
+						if (ceb.getBlock() == t) {
+							ceb.getBlock().onActiveClick();
+						}
+					}
+				}
+			}
+		}
+	}
 
 	private void renderTiles(ShapeRenderer sr) {
+		sr.set(ShapeType.Filled);
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 				if (tiles[x][y] != null && Main.cam.frustum.boundsInFrustum(x * scale, y * scale, 0, scale, scale, 0)) {
@@ -201,7 +220,8 @@ public class Grid {
 							startTile = (CableTile) tiles[(int) startPlace.x][(int) startPlace.y];
 						}
 						if (end.equals(startPlace) && startTile != null && startTile.isConnectedNorth()
-								&& startTile.isConnectedEast() && startTile.isConnectedSouth() && startTile.isConnectedWest()) {
+								&& startTile.isConnectedEast() && startTile.isConnectedSouth()
+								&& startTile.isConnectedWest()) {
 							startTile.toggleBridge();
 						} else {
 							if (tiles[(int) startPlace.x][(int) startPlace.y] == null) {
@@ -325,6 +345,8 @@ public class Grid {
 			return new OrGate(this);
 		case Tile.SWITCH:
 			return new Switch(this);
+		case Tile.LAMP:
+			return new Lamp(this);
 		}
 		return null;
 	}
@@ -373,19 +395,23 @@ public class Grid {
 		}
 		if (t1 instanceof Block && t2 instanceof CableTile && c1 == null) {
 			((Block) t1).cableTile = (CableTile) getPlacingTile();
+			((Block) t1).cableTile.setParent((Block) t1);
 			c1 = ((Block) t1).cableTile;
 		}
 		if (t2 instanceof Block && t1 instanceof CableTile && c2 == null) {
 			((Block) t2).cableTile = (CableTile) getPlacingTile();
+			((Block) t2).cableTile.setParent((Block) t2);
 			c2 = ((Block) t2).cableTile;
 		}
 		if (t1 instanceof Block && t2 instanceof Block) {
 			if (c1 == null) {
 				((Block) t1).cableTile = (CableTile) getPlacingTile();
+				((Block) t1).cableTile.setParent((Block) t1);
 				c1 = ((Block) t1).cableTile;
 			}
 			if (c2 == null) {
 				((Block) t2).cableTile = (CableTile) getPlacingTile();
+				((Block) t2).cableTile.setParent((Block) t2);
 				c2 = ((Block) t2).cableTile;
 			}
 		}
@@ -423,8 +449,8 @@ public class Grid {
 	}
 
 	public void compile() {
-
-		compiler.compile(tiles);
+		this.entryBlocks = compiler.compile(tiles);
+		activeGrid = true;
 	}
 
 	public Tile getMouseTile() {
