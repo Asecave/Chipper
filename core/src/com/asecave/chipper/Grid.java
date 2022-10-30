@@ -59,7 +59,7 @@ public class Grid {
 			flippedPlacement = !flippedPlacement;
 		}
 	}
-	
+
 	private void checkActiveInteraction() {
 		if (Gdx.input.isButtonJustPressed(Buttons.LEFT)) {
 			Vector2 coords = getCursorGridCoords();
@@ -73,6 +73,13 @@ public class Grid {
 							}
 							ceb.update();
 							ceb.updateRender();
+							for (CompiledEntryBlock ceb2 : entryBlocks) {
+								if (ceb2 != ceb) {
+									ceb2.update();
+									ceb2.updateRender();
+								}
+							}
+							break;
 						}
 					}
 				}

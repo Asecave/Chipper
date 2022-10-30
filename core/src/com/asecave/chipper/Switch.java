@@ -11,6 +11,7 @@ public class Switch extends Block {
 	public Switch(Grid grid) {
 		super(grid, Tile.SWITCH);
 		cableTile = new WireTile(grid);
+		cableTile.setParent(this);
 	}
 
 	@Override

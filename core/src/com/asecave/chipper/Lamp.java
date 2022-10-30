@@ -10,6 +10,7 @@ public class Lamp extends Block {
 	public Lamp(Grid grid) {
 		super(grid, Tile.LAMP);
 		cableTile = new WireTile(grid);
+		cableTile.setParent(this);
 	}
 
 	@Override

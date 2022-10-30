@@ -1,5 +1,7 @@
 package com.asecave.chipper;
 
+import com.asecave.chipper.compiled.CompiledCableGrid;
+
 public abstract class CableTile extends Tile {
 
 	protected CableTile connectedCableNorth = null;
@@ -11,6 +13,7 @@ public abstract class CableTile extends Tile {
 
 	protected boolean bridge = false;
 	protected int power;
+	private CompiledCableGrid grid;
 
 	public CableTile(Grid grid, int type) {
 		super(grid, type);
@@ -96,6 +99,10 @@ public abstract class CableTile extends Tile {
 		return parent;
 	}
 	
+	public boolean hasParent() {
+		return parent != null;
+	}
+	
 	public void setPower(int power) {
 		this.power = power;
 	}
@@ -129,5 +136,13 @@ public abstract class CableTile extends Tile {
 			i++;
 		}
 		return connected;
+	}
+
+	public void setGrid(CompiledCableGrid compiledCableGrid) {
+		grid = compiledCableGrid;
+	}
+	
+	public CompiledCableGrid getCompiledCableGrid() {
+		return grid;
 	}
 }
