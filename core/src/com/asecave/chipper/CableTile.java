@@ -13,7 +13,6 @@ public abstract class CableTile extends Tile {
 
 	protected boolean bridge = false;
 	protected int power;
-	private CompiledCableGrid grid;
 
 	public CableTile(Grid grid, int type) {
 		super(grid, type);
@@ -136,13 +135,5 @@ public abstract class CableTile extends Tile {
 			i++;
 		}
 		return connected;
-	}
-
-	public void setGrid(CompiledCableGrid compiledCableGrid) {
-		grid = compiledCableGrid;
-	}
-	
-	public CompiledCableGrid getCompiledCableGrid() {
-		return grid;
 	}
 }

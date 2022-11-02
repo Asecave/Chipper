@@ -461,7 +461,11 @@ public class Grid {
 
 	public void compile() {
 		this.entryBlocks = compiler.compile(tiles);
-		activeGrid = true;
+		if (compiler.getErrorMessage() == null) {
+			activeGrid = true;
+		} else {
+			System.out.println(compiler.getErrorMessage());
+		}
 	}
 
 	public Tile getMouseTile() {

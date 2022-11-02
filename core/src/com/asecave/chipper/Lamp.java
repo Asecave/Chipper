@@ -29,4 +29,8 @@ public class Lamp extends Block {
 			sr.rect(x + 2, y + 2, scale - 3, scale - 3);
 		}
 	}
+	
+	public void setState(boolean state) {
+		this.state = state;
+	}
 }

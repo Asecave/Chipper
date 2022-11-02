@@ -1,6 +1,6 @@
 package com.asecave.chipper.compiled;
 
-public class CompiledBlock {
+public abstract class CompiledBlock {
 	
 	private CompiledCableGrid ccg;
 
@@ -8,11 +8,11 @@ public class CompiledBlock {
 		this.ccg = ccg;
 	}
 
-	public void induct(int power) {
-		
+	protected CompiledCableGrid getOutputCableGrid() {
+		return ccg;
 	}
 	
-	public void updateRender() {
-		
-	}
+	public abstract void induct(int power);
+	
+	public abstract void updateRender();
 }

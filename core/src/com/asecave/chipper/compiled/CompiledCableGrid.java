@@ -34,6 +34,5 @@ public class CompiledCableGrid {
 
 	public void addTile(CableTile cableTile) {
 		tiles.add(cableTile);
-		cableTile.setGrid(this);
 	}
 }
