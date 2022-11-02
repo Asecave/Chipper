@@ -35,4 +35,8 @@ public class CompiledCableGrid {
 	public void addTile(CableTile cableTile) {
 		tiles.add(cableTile);
 	}
+	
+	public int getPower() {
+		return power;
+	}
 }

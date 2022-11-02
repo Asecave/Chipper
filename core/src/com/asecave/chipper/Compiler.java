@@ -71,9 +71,9 @@ public class Compiler {
 				parent.setCompiled();
 				return compileTile(cable, currentGrid);
 			} else if (parent instanceof OrGate) {
-//				CompiledCableGrid newGrid = new CompiledCableGrid();
-//				
-//				parent.setCompiled();
+				CompiledCableGrid newGrid = new CompiledCableGrid();
+				
+				parent.setCompiled();
 			}
 		} else {
 			currentGrid.addTile(cable);
