@@ -4,6 +4,7 @@ import com.asecave.chipper.compiled.CompiledBlock;
 import com.asecave.chipper.compiled.CompiledCableGrid;
 import com.asecave.chipper.compiled.CompiledEntryBlock;
 import com.asecave.chipper.compiled.CompiledLamp;
+import com.asecave.chipper.compiled.CompiledOrGate;
 import com.badlogic.gdx.utils.Array;
 
 public class Compiler {
@@ -62,7 +63,7 @@ public class Compiler {
 
 		if (cable.hasParent() && !cable.getParent().isCompiled()) {
 			Block parent = cable.getParent();
-			
+
 			if (parent instanceof Switch) {
 				errorMessage = "Cable can't have multiple inputs.";
 				return false;
@@ -72,8 +73,15 @@ public class Compiler {
 				return compileTile(cable, currentGrid);
 			} else if (parent instanceof OrGate) {
 				CompiledCableGrid newGrid = new CompiledCableGrid();
-				
+				CompiledOrGate orGate = new CompiledOrGate((OrGate) parent);
+				orGate.connectOutputToCableGrid(newGrid);
 				parent.setCompiled();
+				if (parent.cableTile.isConnectedNorth()) {
+					boolean success = compileTile(parent.cableTile.getConnectedCableNorth(), newGrid);
+					if (!success) {
+						return false;
+					}
+				}
 			}
 		} else {
 			currentGrid.addTile(cable);
