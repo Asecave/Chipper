@@ -1,16 +1,18 @@
 package com.asecave.chipper.compiled;
 
 public abstract class CompiledBlock extends CompiledTile {
-
+	
 	protected CompiledCableGrid output;
 	protected CompiledCableGrid[] inputs;
-	private int inputIndex = 0;
-
+	protected int inputIndex = 0;
+	
 	public CompiledBlock() {
 		inputs = new CompiledCableGrid[3];
-		for (int i = 0; i < inputs.length; i++) {
-			inputs[i] = new CompiledCableGrid();
-		}
+	}
+	
+	@Override
+	public void updateRender() {
+		output.updateRender();
 	}
 	
 	public void addInputGrid(CompiledCableGrid input) {
