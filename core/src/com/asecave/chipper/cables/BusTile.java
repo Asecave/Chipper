@@ -1,5 +1,7 @@
-package com.asecave.chipper;
+package com.asecave.chipper.cables;
 
+import com.asecave.chipper.Grid;
+import com.asecave.chipper.Tile;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 

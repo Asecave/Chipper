@@ -1,13 +1,15 @@
-package com.asecave.chipper;
+package com.asecave.chipper.blocks;
 
+import com.asecave.chipper.Grid;
+import com.asecave.chipper.Tile;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
-public class OrGate extends Block {
+public class XorGate extends Block {
 
-	public OrGate(Grid grid) {
-		super(grid, Tile.OR);
+	public XorGate(Grid grid) {
+		super(grid, Tile.XOR);
 	}
 
 	@Override
@@ -26,7 +28,7 @@ public class OrGate extends Block {
 		sr.rect(x + 1, y + 4, 1, scale - 7);
 		sr.setColor(new Color(0.7f, 0.7f, 0.7f, 1f));
 		sr.rect(x + 4, y + scale - 1, scale - 7, 1);
-		sr.rect(x + 7, y + 5, 1, 5);
+//		sr.rect(x + 7, y + 5, 1, 5);
 	}
 
 }

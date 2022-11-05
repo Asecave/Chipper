@@ -1,6 +1,6 @@
 package com.asecave.chipper.compiled;
 
-import com.asecave.chipper.Lamp;
+import com.asecave.chipper.blocks.Lamp;
 
 public class CompiledLamp extends CompiledBlock {
 

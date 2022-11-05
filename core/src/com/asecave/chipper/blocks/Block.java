@@ -1,5 +1,8 @@
-package com.asecave.chipper;
+package com.asecave.chipper.blocks;
 
+import com.asecave.chipper.Grid;
+import com.asecave.chipper.Tile;
+import com.asecave.chipper.cables.CableTile;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public abstract class Block extends Tile {

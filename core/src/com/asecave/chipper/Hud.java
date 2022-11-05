@@ -15,7 +15,7 @@ public class Hud {
 
 		int sw = Gdx.graphics.getWidth();
 		int sh = Gdx.graphics.getHeight();
-		int w = 300;
+		int w = 400;
 		int h = 50;
 
 		sr.translate(sw / 2 - w / 2, 50, 0);
@@ -51,17 +51,17 @@ public class Hud {
 		sr.rectLine(3 * h + h / 2 - 8, h / 2 + 4, 3 * h + h / 2 + 1, h / 2 - 5, 4);
 		sr.rectLine(3 * h + h / 2 + 8, h / 2 + 4, 3 * h + h / 2 - 1, h / 2 - 5, 4);
 		
-		sr.rectLine(4 * h + h / 2 - 12, h / 2, 4 * h + h / 2 - 4, h / 2, 3);
-		sr.rectLine(4 * h + h / 2 - 5, h / 2 - 1, 4 * h + h / 2 + 4, h / 2 + 8, 3);
-		sr.rectLine(4 * h + h / 2 + 4, h / 2, 4 * h + h / 2 + 12, h / 2, 3);
+		sr.rectLine(6 * h + h / 2 - 12, h / 2, 6 * h + h / 2 - 4, h / 2, 3);
+		sr.rectLine(6 * h + h / 2 - 5, h / 2 - 1, 6 * h + h / 2 + 4, h / 2 + 8, 3);
+		sr.rectLine(6 * h + h / 2 + 4, h / 2, 6 * h + h / 2 + 12, h / 2, 3);
 		
 		sr.set(ShapeType.Line);
-		sr.circle(5 * h + h / 2, h / 2, 10);
-		sr.circle(5 * h + h / 2, h / 2, 9);
-		sr.circle(5 * h + h / 2, h / 2, 8);
+		sr.circle(7 * h + h / 2, h / 2, 10);
+		sr.circle(7 * h + h / 2, h / 2, 9);
+		sr.circle(7 * h + h / 2, h / 2, 8);
 		sr.set(ShapeType.Filled);
-		sr.rectLine(5 * h + 18, 18, 5 * h + 32, 32, 3);
-		sr.rectLine(5 * h + 32, 18, 5 * h + 18, 32, 3);
+		sr.rectLine(7 * h + 18, 18, 7 * h + 32, 32, 3);
+		sr.rectLine(7 * h + 32, 18, 7 * h + 18, 32, 3);
 
 		sr.translate(-(sw / 2 - w / 2), -50, 0);
 

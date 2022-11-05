@@ -1,6 +1,6 @@
 package com.asecave.chipper.compiled;
 
-import com.asecave.chipper.Block;
+import com.asecave.chipper.blocks.Block;
 
 public abstract class CompiledEntryBlock extends CompiledBlock {
 	

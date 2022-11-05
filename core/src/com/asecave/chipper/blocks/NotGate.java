@@ -1,13 +1,15 @@
-package com.asecave.chipper;
+package com.asecave.chipper.blocks;
 
+import com.asecave.chipper.Grid;
+import com.asecave.chipper.Tile;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
-public class AndGate extends Block {
+public class NotGate extends Block {
 
-	public AndGate(Grid grid) {
-		super(grid, Tile.AND);
+	public NotGate(Grid grid) {
+		super(grid, Tile.OR);
 	}
 
 	@Override
@@ -26,18 +28,7 @@ public class AndGate extends Block {
 		sr.rect(x + 1, y + 4, 1, scale - 7);
 		sr.setColor(new Color(0.7f, 0.7f, 0.7f, 1f));
 		sr.rect(x + 4, y + scale - 1, scale - 7, 1);
-		
-		// & sign with sr
-		sr.rect(x + 6, y + 10, 2, 1);
-		sr.rect(x + 5, y + 8, 1, 2);
-		sr.rect(x + 5, y + 5, 1, 2);
-		sr.rect(x + 6, y + 4, 2, 1);
-		sr.rect(x + 9, y + 4, 1, 1);
-		sr.rect(x + 8, y + 5, 1, 1);
-		sr.rect(x + 7, y + 6, 1, 1);
-		sr.rect(x + 6, y + 7, 1, 1);
-		sr.rect(x + 7, y + 8, 1, 1);
-		sr.rect(x + 8, y + 9, 1, 1);
-		sr.rect(x + 9, y + 6, 1, 1);
+		sr.rect(x + 7, y + 5, 1, 5);
 	}
+
 }

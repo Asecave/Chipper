@@ -1,12 +1,22 @@
 package com.asecave.chipper;
 
+import com.asecave.chipper.blocks.AndGate;
+import com.asecave.chipper.blocks.Block;
+import com.asecave.chipper.blocks.Lamp;
+import com.asecave.chipper.blocks.NotGate;
+import com.asecave.chipper.blocks.OrGate;
+import com.asecave.chipper.blocks.Switch;
+import com.asecave.chipper.blocks.XorGate;
+import com.asecave.chipper.cables.CableTile;
 import com.asecave.chipper.compiled.CompiledAndGate;
 import com.asecave.chipper.compiled.CompiledBlock;
 import com.asecave.chipper.compiled.CompiledCableGrid;
 import com.asecave.chipper.compiled.CompiledEntryBlock;
 import com.asecave.chipper.compiled.CompiledLamp;
+import com.asecave.chipper.compiled.CompiledNotGate;
 import com.asecave.chipper.compiled.CompiledOrGate;
 import com.asecave.chipper.compiled.CompiledSwitch;
+import com.asecave.chipper.compiled.CompiledXorGate;
 import com.badlogic.gdx.utils.Array;
 
 public class Compiler {
@@ -91,8 +101,20 @@ public class Compiler {
 				return compileLogicGate(cable, currentGrid, orGate);
 				
 			} else if (parent instanceof AndGate) {
+				
 				CompiledAndGate andGate = new CompiledAndGate();
 				return compileLogicGate(cable, currentGrid, andGate);
+				
+			} else if (parent instanceof XorGate) {
+				
+				CompiledXorGate xorGate = new CompiledXorGate();
+				return compileLogicGate(cable, currentGrid, xorGate);
+				
+			} else if (parent instanceof NotGate) {
+				
+				CompiledNotGate notGate = new CompiledNotGate();
+				return compileLogicGate(cable, currentGrid, notGate);
+				
 			}
 		} else {
 			currentGrid.addTile(cable);

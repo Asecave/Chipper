@@ -1,4 +1,8 @@
-package com.asecave.chipper;
+package com.asecave.chipper.cables;
+
+import com.asecave.chipper.Grid;
+import com.asecave.chipper.Tile;
+import com.asecave.chipper.blocks.Block;
 
 public abstract class CableTile extends Tile {
 

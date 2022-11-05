@@ -3,7 +3,7 @@ package com.asecave.chipper.compiled;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.asecave.chipper.CableTile;
+import com.asecave.chipper.cables.CableTile;
 
 public class CompiledCableGrid extends CompiledTile {
 

@@ -1,6 +1,6 @@
 package com.asecave.chipper.compiled;
 
-public class CompiledOrGate extends CompiledBlock {
+public class CompiledXorGate extends CompiledBlock {
 
 	@Override
 	public void induct(int power) {
@@ -10,10 +10,10 @@ public class CompiledOrGate extends CompiledBlock {
 			newPower = inputs[0].getPower();
 			break;
 		case 2:
-			newPower = inputs[0].getPower() | inputs[1].getPower();
+			newPower = inputs[0].getPower() ^ inputs[1].getPower();
 			break;
 		case 3:
-			newPower = inputs[0].getPower() | inputs[1].getPower() | inputs[2].getPower();
+			newPower = inputs[0].getPower() ^ inputs[1].getPower() ^ inputs[2].getPower();
 			break;
 		}
 		if (output.getPower() != newPower) {

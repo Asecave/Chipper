@@ -9,8 +9,10 @@ public abstract class Tile {
 	protected static final int BUS = 1;
 	public static final int AND = 2;
 	public static final int OR = 3;
-	public static final int SWITCH = 4;
-	public static final int LAMP = 5;
+	public static final int XOR = 4;
+	public static final int NOT = 5;
+	public static final int SWITCH = 6;
+	public static final int LAMP = 7;
 
 	public final int type;
 	protected Grid grid;

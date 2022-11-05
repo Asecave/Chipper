@@ -17,7 +17,7 @@ public class CompiledAndGate extends CompiledBlock {
 			break;
 		}
 		if (output.getPower() != newPower) {
-			output.induct(power);
+			output.induct(newPower);
 		}
 	}
 

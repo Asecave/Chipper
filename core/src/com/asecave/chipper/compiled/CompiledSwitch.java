@@ -1,7 +1,7 @@
 package com.asecave.chipper.compiled;
 
-import com.asecave.chipper.Block;
-import com.asecave.chipper.Switch;
+import com.asecave.chipper.blocks.Block;
+import com.asecave.chipper.blocks.Switch;
 
 public class CompiledSwitch extends CompiledEntryBlock {
 

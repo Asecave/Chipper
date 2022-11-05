@@ -1,5 +1,7 @@
-package com.asecave.chipper;
+package com.asecave.chipper.cables;
 
+import com.asecave.chipper.Grid;
+import com.asecave.chipper.Tile;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -12,7 +14,7 @@ public class WireTile extends CableTile {
 	@Override
 	public void render(ShapeRenderer sr, int x, int y, int scale) {
 		Color color = Color.RED.cpy();
-		if (power == 0) {
+		if ((power & 1) == 0) {
 			color.add(-0.5f, -0.5f, -0.5f, 0f);
 		}
 		sr.setColor(color);

@@ -1,6 +1,17 @@
 package com.asecave.chipper;
 
+import com.asecave.chipper.blocks.AndGate;
+import com.asecave.chipper.blocks.Block;
+import com.asecave.chipper.blocks.Lamp;
+import com.asecave.chipper.blocks.NotGate;
+import com.asecave.chipper.blocks.OrGate;
+import com.asecave.chipper.blocks.Switch;
+import com.asecave.chipper.blocks.XorGate;
+import com.asecave.chipper.cables.BusTile;
+import com.asecave.chipper.cables.CableTile;
+import com.asecave.chipper.cables.WireTile;
 import com.asecave.chipper.compiled.CompiledEntryBlock;
+import com.asecave.chipper.compiled.CompiledNotGate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -354,6 +365,10 @@ public class Grid {
 			return new AndGate(this);
 		case Tile.OR:
 			return new OrGate(this);
+		case Tile.XOR:
+			return new XorGate(this);
+		case Tile.NOT:
+			return new NotGate(this);
 		case Tile.SWITCH:
 			return new Switch(this);
 		case Tile.LAMP:
@@ -463,6 +478,15 @@ public class Grid {
 		this.entryBlocks = compiler.compile(tiles);
 		if (compiler.getErrorMessage() == null) {
 			activeGrid = true;
+			for (int x = 0; x < tiles.length; x++) {
+				for (int y = 0; y < tiles[0].length; y++) {
+					if (tiles[x][y] instanceof NotGate) {
+						CompiledNotGate cng = (CompiledNotGate) ((Block) tiles[x][y]).getCompiledVariant();
+						cng.induct(0);
+						cng.updateRender();
+					}
+				}
+			}
 		} else {
 			System.out.println(compiler.getErrorMessage());
 		}
