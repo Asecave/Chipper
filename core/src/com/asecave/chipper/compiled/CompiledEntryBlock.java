@@ -1,37 +1,19 @@
 package com.asecave.chipper.compiled;
 
 import com.asecave.chipper.Block;
-import com.asecave.chipper.Switch;
 
-public class CompiledEntryBlock {
+public abstract class CompiledEntryBlock extends CompiledBlock {
 	
-	private CompiledCableGrid cable;
-	private Block block;
+	public abstract void update();
 	
-	public CompiledEntryBlock(Block block) {
-		this.block = block;
-	}
-
-	public void connectToCableGrid(CompiledCableGrid ccg) {
-		cable = ccg;
-	}
-
-	public Block getBlock() {
-		return block;
+	@Override
+	public void induct(int power) {
 	}
 	
-	public void update() {
-		int power = 0;
-		if (block instanceof Switch) {
-			Switch s = (Switch) block;
-			if (s.getState()) {
-				power = 1;
-			}
-		}
-		cable.induct(power);
-	}
-
+	@Override
 	public void updateRender() {
-		cable.updateRender();
+		output.updateRender();
 	}
+	
+	public abstract Block getEntryBlock();
 }

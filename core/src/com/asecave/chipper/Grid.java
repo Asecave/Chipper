@@ -67,9 +67,9 @@ public class Grid {
 				Tile t = tiles[(int) coords.x][(int) coords.y];
 				if (t != null) {
 					for (CompiledEntryBlock ceb : entryBlocks) {
-						if (ceb.getBlock() == t) {
-							if (ceb.getBlock() instanceof Switch) {
-								((Switch) ceb.getBlock()).toggle();
+						if (ceb.getEntryBlock() == t) {
+							if (ceb.getEntryBlock() instanceof Switch) {
+								((Switch) ceb.getEntryBlock()).toggle();
 							}
 							ceb.update();
 							ceb.updateRender();

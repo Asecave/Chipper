@@ -1,5 +1,6 @@
 package com.asecave.chipper;
 
+import com.asecave.chipper.compiled.CompiledTile;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public abstract class Tile {
@@ -13,7 +14,7 @@ public abstract class Tile {
 
 	public final int type;
 	protected Grid grid;
-	private boolean isCompiled = false;
+	private CompiledTile compiledTile = null;
 
 	public Tile(Grid grid, int type) {
 		this.grid = grid;
@@ -23,14 +24,18 @@ public abstract class Tile {
 	public abstract void render(ShapeRenderer sr, int x, int y, int scale);
 	
 	public boolean isCompiled() {
-		return isCompiled;
+		return compiledTile != null;
 	}
 	
-	public void setCompiled() {
-		isCompiled = true;
+	public void setCompiled(CompiledTile tile) {
+		compiledTile = tile;
 	}
 	
 	public void resetCompiled() {
-		isCompiled = false;
+		compiledTile = null;
+	}
+	
+	public CompiledTile getCompiledVariant() {
+		return compiledTile;
 	}
 }

@@ -1,7 +1,5 @@
 package com.asecave.chipper;
 
-import com.asecave.chipper.compiled.CompiledCableGrid;
-
 public abstract class CableTile extends Tile {
 
 	protected CableTile connectedCableNorth = null;
