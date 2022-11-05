@@ -486,4 +486,12 @@ public class Grid {
 		}
 		return null;
 	}
+	
+	public int getWidth() {
+		return tiles.length;
+	}
+	
+	public int getHeight() {
+		return tiles[0].length;
+	}
 }

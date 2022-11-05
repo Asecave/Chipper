@@ -40,6 +40,8 @@ public class Main extends ApplicationAdapter {
 
 		grid = new Grid(10, 10);
 		hud = new Hud();
+		
+		cam.position.add(Grid.scale * grid.getWidth() / 2, Grid.scale * grid.getHeight() / 2, 0);
 
 		Gdx.input.setInputProcessor(input);
 	}
