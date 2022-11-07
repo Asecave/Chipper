@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Main extends ApplicationAdapter {
-	
+
 	public static Main INSTANCE;
 
 	private ShapeRenderer sr;
@@ -40,7 +40,7 @@ public class Main extends ApplicationAdapter {
 
 		grid = new Grid(10, 10);
 		hud = new Hud();
-		
+
 		cam.position.add(Grid.scale * grid.getWidth() / 2, Grid.scale * grid.getHeight() / 2, 0);
 
 		Gdx.input.setInputProcessor(input);
@@ -101,7 +101,7 @@ public class Main extends ApplicationAdapter {
 		Vector3 v = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		return new Vector2(v.x, v.y);
 	}
-	
+
 	public Grid getGrid() {
 		return grid;
 	}

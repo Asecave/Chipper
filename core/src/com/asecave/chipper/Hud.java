@@ -1,5 +1,6 @@
 package com.asecave.chipper;
 
+import com.asecave.chipper.blocks.XorGate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.Color;
@@ -50,6 +51,12 @@ public class Hud {
 		
 		sr.rectLine(3 * h + h / 2 - 8, h / 2 + 4, 3 * h + h / 2 + 1, h / 2 - 5, 4);
 		sr.rectLine(3 * h + h / 2 + 8, h / 2 + 4, 3 * h + h / 2 - 1, h / 2 - 5, 4);
+		
+		sr.rectLine(4 * h + 18, 18, 4 * h + 32, 32, 3);
+		sr.rectLine(4 * h + 32, 18, 4 * h + 18, 32, 3);
+		
+		sr.rectLine(5 * h + h / 2 - 2, h / 2 - 2, 5 * h + h / 2 - 2, h / 2 + 12, 4);
+		sr.rectLine(5 * h + h / 2 - 2, h / 2 - 10, 5 * h + h / 2 - 2, h / 2 - 6, 4);
 		
 		sr.rectLine(6 * h + h / 2 - 12, h / 2, 6 * h + h / 2 - 4, h / 2, 3);
 		sr.rectLine(6 * h + h / 2 - 5, h / 2 - 1, 6 * h + h / 2 + 4, h / 2 + 8, 3);

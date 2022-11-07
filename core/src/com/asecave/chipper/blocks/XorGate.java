@@ -28,7 +28,12 @@ public class XorGate extends Block {
 		sr.rect(x + 1, y + 4, 1, scale - 7);
 		sr.setColor(new Color(0.7f, 0.7f, 0.7f, 1f));
 		sr.rect(x + 4, y + scale - 1, scale - 7, 1);
-//		sr.rect(x + 7, y + 5, 1, 5);
+		
+		sr.rect(x + 7, y + 8, 1, 1);
+		sr.rect(x + 6, y + 7, 1, 1);
+		sr.rect(x + 5, y + 6, 1, 1);
+		sr.rect(x + 8, y + 7, 1, 1);
+		sr.rect(x + 9, y + 6, 1, 1);
 	}
 
 }
