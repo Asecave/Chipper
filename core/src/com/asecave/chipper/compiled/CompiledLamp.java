@@ -12,7 +12,7 @@ public class CompiledLamp extends CompiledBlock {
 
 	@Override
 	public void induct(int power) {
-		lamp.setState(power > 0);
+		lamp.setState((power & 1) > 0);
 	}
 
 	@Override
