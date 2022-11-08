@@ -2,6 +2,7 @@ package com.asecave.chipper;
 
 import com.asecave.chipper.blocks.AndGate;
 import com.asecave.chipper.blocks.Block;
+import com.asecave.chipper.blocks.Clock;
 import com.asecave.chipper.blocks.Lamp;
 import com.asecave.chipper.blocks.NotGate;
 import com.asecave.chipper.blocks.OrGate;
@@ -11,6 +12,7 @@ import com.asecave.chipper.cables.CableTile;
 import com.asecave.chipper.compiled.CompiledAndGate;
 import com.asecave.chipper.compiled.CompiledBlock;
 import com.asecave.chipper.compiled.CompiledCableGrid;
+import com.asecave.chipper.compiled.CompiledClock;
 import com.asecave.chipper.compiled.CompiledEntryBlock;
 import com.asecave.chipper.compiled.CompiledLamp;
 import com.asecave.chipper.compiled.CompiledNotGate;
@@ -88,6 +90,20 @@ public class Compiler {
 					return compileTile(cable, currentGrid);
 				}
 
+			} else if (parent instanceof Clock) {
+				
+				if (currentGrid.hasInput()) {
+					errorMessage = "Cable can't have multiple inputs.";
+					return false;
+				} else {
+					CompiledClock clock = new CompiledClock((Clock) parent);
+					clock.connectOutputToCableGrid(currentGrid);
+					currentGrid.setInput(clock);
+					parent.setCompiled(clock);
+					compiledEntryBlocks.add(clock);
+					return compileTile(cable, currentGrid);
+				}
+				
 			} else if (parent instanceof Lamp) {
 
 				CompiledLamp lamp = new CompiledLamp((Lamp) parent);

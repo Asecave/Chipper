@@ -13,6 +13,7 @@ public abstract class Tile {
 	public static final int NOT = 5;
 	public static final int SWITCH = 6;
 	public static final int LAMP = 7;
+	public static final int CLOCK = 8;
 
 	public final int type;
 	protected Grid grid;

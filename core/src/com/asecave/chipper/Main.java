@@ -75,6 +75,7 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		sr.dispose();
+		grid.clockThreadRunning = false;
 	}
 
 	@Override

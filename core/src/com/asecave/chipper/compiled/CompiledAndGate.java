@@ -1,5 +1,7 @@
 package com.asecave.chipper.compiled;
 
+import com.asecave.chipper.Config;
+
 public class CompiledAndGate extends CompiledBlock {
 
 	@Override
@@ -16,7 +18,8 @@ public class CompiledAndGate extends CompiledBlock {
 			newPower = inputs[0].getPower() & inputs[1].getPower() & inputs[2].getPower();
 			break;
 		}
-		if (output.getPower() != newPower) {
+		if (output.getPower() != newPower && valueChanges < Config.maxLoopStackSize) {
+			valueChanges++;
 			output.induct(newPower);
 		}
 	}

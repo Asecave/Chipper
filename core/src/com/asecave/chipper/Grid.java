@@ -2,6 +2,7 @@ package com.asecave.chipper;
 
 import com.asecave.chipper.blocks.AndGate;
 import com.asecave.chipper.blocks.Block;
+import com.asecave.chipper.blocks.Clock;
 import com.asecave.chipper.blocks.Lamp;
 import com.asecave.chipper.blocks.NotGate;
 import com.asecave.chipper.blocks.OrGate;
@@ -10,6 +11,7 @@ import com.asecave.chipper.blocks.XorGate;
 import com.asecave.chipper.cables.BusTile;
 import com.asecave.chipper.cables.CableTile;
 import com.asecave.chipper.cables.WireTile;
+import com.asecave.chipper.compiled.CompiledClock;
 import com.asecave.chipper.compiled.CompiledEntryBlock;
 import com.asecave.chipper.compiled.CompiledNotGate;
 import com.badlogic.gdx.Gdx;
@@ -40,6 +42,30 @@ public class Grid {
 
 	private boolean activeGrid = false;
 	private Array<CompiledEntryBlock> entryBlocks;
+
+	private Thread clockThread;
+	public boolean clockThreadRunning = true;
+	private Runnable clockThreadRunnable = new Runnable() {
+
+		@Override
+		public void run() {
+			while (clockThreadRunning) {
+				for (CompiledEntryBlock eb : entryBlocks) {
+					if (eb instanceof CompiledClock) {
+						CompiledClock clock = (CompiledClock) eb;
+						((Clock) clock.getEntryBlock()).toggle();
+						clock.update();
+						clock.updateRender();
+					}
+				}
+				try {
+					Thread.sleep(Config.clockSpeed == 0 ? 0 : 1000 / Config.clockSpeed);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	};
 
 	public Grid(int width, int height) {
 
@@ -84,12 +110,6 @@ public class Grid {
 							}
 							ceb.update();
 							ceb.updateRender();
-							for (CompiledEntryBlock ceb2 : entryBlocks) {
-								if (ceb2 != ceb) {
-									ceb2.update();
-									ceb2.updateRender();
-								}
-							}
 							break;
 						}
 					}
@@ -373,6 +393,8 @@ public class Grid {
 			return new Switch(this);
 		case Tile.LAMP:
 			return new Lamp(this);
+		case Tile.CLOCK:
+			return new Clock(this);
 		}
 		return null;
 	}
@@ -476,7 +498,9 @@ public class Grid {
 
 	public void compile() {
 		this.entryBlocks = compiler.compile(tiles);
+
 		if (compiler.getErrorMessage() == null) {
+
 			activeGrid = true;
 			for (int x = 0; x < tiles.length; x++) {
 				for (int y = 0; y < tiles[0].length; y++) {
@@ -487,6 +511,10 @@ public class Grid {
 					}
 				}
 			}
+			clockThreadRunning = true;
+			clockThread = new Thread(clockThreadRunnable);
+			clockThread.start();
+
 		} else {
 			System.out.println(compiler.getErrorMessage());
 		}
@@ -510,11 +538,11 @@ public class Grid {
 		}
 		return null;
 	}
-	
+
 	public int getWidth() {
 		return tiles.length;
 	}
-	
+
 	public int getHeight() {
 		return tiles[0].length;
 	}
