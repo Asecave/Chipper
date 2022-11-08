@@ -57,6 +57,7 @@ public class Grid {
 						clock.update();
 						clock.updateRender();
 					}
+					eb.resetValueChanges();
 				}
 				try {
 					Thread.sleep(Config.clockSpeed == 0 ? 0 : 1000 / Config.clockSpeed);

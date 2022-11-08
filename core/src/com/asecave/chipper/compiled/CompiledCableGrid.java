@@ -55,10 +55,12 @@ public class CompiledCableGrid extends CompiledTile {
 	public boolean hasInput() {
 		return input != null;
 	}
-	
+
 	public void resetValueChanges() {
-		for(CompiledBlock b : outputs) {
-			b.resetValueChanges();
+		for (CompiledBlock b : outputs) {
+			if (b.getValueChanges() != 0) {
+				b.resetValueChanges();
+			}
 		}
 	}
 }
