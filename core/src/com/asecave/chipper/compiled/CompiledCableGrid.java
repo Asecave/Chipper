@@ -1,5 +1,6 @@
 package com.asecave.chipper.compiled;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,5 +61,9 @@ public class CompiledCableGrid extends CompiledTile {
 		for(CompiledBlock b : outputs) {
 			b.resetValueChanges();
 		}
+	}
+	
+	public String print() {
+		return Arrays.toString(outputs.toArray());
 	}
 }
