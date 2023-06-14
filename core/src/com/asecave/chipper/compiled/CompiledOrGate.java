@@ -18,6 +18,7 @@ public class CompiledOrGate extends CompiledBlock {
 			newPower = inputs[0].getPower() | inputs[1].getPower() | inputs[2].getPower();
 			break;
 		}
+		System.out.println(power + "  " + getOutputCableGrid().print());
 		if (output.getPower() != newPower && valueChanges < Config.maxLoopStackSize) {
 			valueChanges++;
 			output.induct(newPower);
